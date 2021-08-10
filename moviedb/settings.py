@@ -74,13 +74,20 @@ WSGI_APPLICATION = 'moviedb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+def get_host():
+    if 'DB_HOST' in os.environ:
+        return os.environ['DB_HOST']
+    if 'PRODUCTION' in os.environ:
+        return 'db'
+    return 'localhost'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'db' if 'PRODUCTION' in os.environ else 'localhost',
+        'HOST': get_host(),
         'PORT': 5432,
     }
 }
