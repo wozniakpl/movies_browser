@@ -22,10 +22,22 @@ Then, you need to call
 pip3 install -r requirements.txt
 ```
 
-and
+and start the backend by calling:
 
 ```
 python3 manage.py runserver 0.0.0.0:8000
+```
+
+and start the frontend by calling in `client` directory:
+
+```
+yarn
+```
+
+and then
+
+```
+yarn start
 ```
 
 ## TODO
