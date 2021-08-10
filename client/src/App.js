@@ -13,7 +13,7 @@ class App extends Component {
 
   refresh = () => {
     axios
-      .get("/api/movies/")
+      .get("http://localhost:8000/api/movies/")
       .then((response) => {
         console.log("response", response);
         this.setState({ movies: response.data });
