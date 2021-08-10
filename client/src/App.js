@@ -15,6 +15,7 @@ class App extends Component {
     axios
       .get("/api/movies/")
       .then((response) => {
+        console.log("response", response);
         this.setState({ movies: response.data });
       })
       .catch((error) => {
@@ -23,7 +24,7 @@ class App extends Component {
   };
 
   renderItems = () => {
-    const newItems = this.state.movies;
+    const newItems = this.state.movies ? this.state.movies : [];
 
     return newItems.map((item) => (
       <li
