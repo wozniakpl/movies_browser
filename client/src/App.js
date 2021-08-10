@@ -1,28 +1,26 @@
 import React, { Component } from "react";
-
-const movies = [
-  {
-    id: 1,
-    title: "Star Wars 1",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  },
-  {
-    id: 2,
-    title: "Star Wars 2",
-    description: "Very nice",
-  },
-];
+import axios from "axios";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: movies,
+      movies: [],
     };
   }
 
   displayCompleted = (status) => {};
+
+  refresh = () => {
+    axios
+      .get("/api/movies/")
+      .then((response) => {
+        this.setState({ movies: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   renderItems = () => {
     const newItems = this.state.movies;
@@ -50,7 +48,12 @@ class App extends Component {
           <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="card p-3">
               <div className="mb-4">
-                <button className="btn btn-primary">Search</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => this.refresh()}
+                >
+                  Search
+                </button>
               </div>
               <ul className="list-group list-group-flush border-top-0">
                 {this.renderItems()}

@@ -10,11 +10,15 @@ To run the production version of the app, call:
 docker-compose up
 ```
 
+### Database
+
 To run the project locally, you first start the database by calling
 
 ```
 docker-compose run -p 5432:5432 db
 ```
+
+### Backend
 
 Then, you need to call
 
@@ -28,7 +32,15 @@ and start the backend by calling:
 python3 manage.py runserver 0.0.0.0:8000
 ```
 
-and start the frontend by calling in `client` directory:
+or with docker:
+
+```
+docker-compose run web
+```
+
+### Client
+
+and start the client by calling in `client` directory:
 
 ```
 yarn
