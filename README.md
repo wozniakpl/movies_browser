@@ -54,7 +54,6 @@ yarn start
 
 ## TODO
 
-- Frontend setup
 - Browsing/searching
 - Logging in
 - Storing stuff in db
