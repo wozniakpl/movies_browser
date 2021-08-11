@@ -27,6 +27,6 @@ services:
     volumes:
       - .:/code
     ports:
-      - "3000:5000"
+      - "3000:3000"
     depends_on:
       - backend
