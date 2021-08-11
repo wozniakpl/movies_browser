@@ -21,8 +21,11 @@ router = routers.DefaultRouter()
 router.register(r'movies', views.MovieView, 'movie')
 from django.views.generic import TemplateView
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('api/', include(router.urls)),
+    path('api/search/title/<str:title>/', views.TitlesView.as_view()),
+    path('api/search/pattern/<str:title>/', views.PatternView.as_view()),
 ]
