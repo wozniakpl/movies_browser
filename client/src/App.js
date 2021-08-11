@@ -28,12 +28,11 @@ class App extends Component {
     return newItems.map((item) => (
       <li
         key={item.imdbID}
-        className="list-group-item d-flex justify-content-between align-items-center"
+        className="list-group-item justify-content-between align-items-center"
       >
         <span className={`mr-2`} title={item.description}>
           <MovieCard movie={item} />
         </span>
-        /
       </li>
     ));
   };
@@ -84,6 +83,7 @@ class App extends Component {
           type="text"
           id="exact-search"
           placeholder="Search exact title"
+          defaultValue={process.env.NODE_ENV === "production" ? "" : "purge"}
         ></input>
         <button onClick={this.onSearchTitle}>Exact search</button>
       </div>
@@ -95,6 +95,7 @@ class App extends Component {
           type="text"
           placeholder="Search pattern"
           id="pattern-search"
+          defaultValue={process.env.NODE_ENV === "production" ? "" : "potter"}
         ></input>
         <button onClick={this.onSearchMovie}>Pattern search</button>
       </div>

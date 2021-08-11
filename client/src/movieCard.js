@@ -24,6 +24,9 @@ class MovieCard extends Component {
             <h3>{movie.Genre}</h3>
             <p>{movie.Plot}</p>
             {/* TODO <button>Add to favorites</button> */}
+            <center>
+              <img src={movie.Poster} alt="Poster"></img>
+            </center>
           </div>
         </div>
       </div>
