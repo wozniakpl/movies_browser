@@ -12,8 +12,12 @@ class App extends Component {
   displayCompleted = (status) => {};
 
   refresh = () => {
+    var host = "http://localhost:8000";
+    if (process.env.REACT_APP_BACKEND_HOST != undefined) {
+      host = "http://" + process.env.REACT_APP_BACKEND_HOST;
+    }
     axios
-      .get("http://localhost:8000/api/movies/")
+      .get(host + "/api/movies/")
       .then((response) => {
         console.log("response", response);
         this.setState({ movies: response.data });
