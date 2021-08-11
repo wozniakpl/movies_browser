@@ -13,7 +13,7 @@ class App extends Component {
 
   refresh = () => {
     var host = "http://localhost:8000";
-    if (process.env.REACT_APP_BACKEND_HOST != undefined) {
+    if (process.env.REACT_APP_BACKEND_HOST !== undefined) {
       host = "http://" + process.env.REACT_APP_BACKEND_HOST;
     }
     axios
