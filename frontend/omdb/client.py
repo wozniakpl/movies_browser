@@ -1,10 +1,12 @@
 import requests
 
-API_KEY = "5ba8bcf0" # if it stops working, make a new one, it's 1k request per day
+API_KEY = "5ba8bcf0"  # if it stops working, make a new one, it's 1k request per day
 base_url = "http://www.omdbapi.com/"
+
 
 def make_url():
     return base_url + "?apikey=" + API_KEY + "&"
+
 
 class OMDBClient:
     def search_title(title):

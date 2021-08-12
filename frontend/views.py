@@ -9,6 +9,7 @@ from .omdb.client import OMDBClient
 import json
 from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
 
+
 class MovieView(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
     queryset = Movie.objects.all()
@@ -19,6 +20,7 @@ class TitlesView(APIView):
         data = OMDBClient.search_title(title)
         # TODO: check, if such request was made and store response
         return Response(json.loads(data))
+
 
 class PatternView(APIView):
     def get(self, request, pattern, page, *args, **kwargs):
