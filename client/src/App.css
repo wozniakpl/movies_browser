@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+h1 {
+  color: rgb(200, 205, 45);
+  font-size: 60px;
+}
