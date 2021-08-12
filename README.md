@@ -64,5 +64,7 @@ You can set env variable REACT_APP_BACKEND_HOST to any host you want, e.g. 172.1
 
 ## TODO
 
-- Logging in
-- Storing stuff in db
+- Veryfing login token on backend
+- Storing stuff in db (favorites)
+- Add github actions
+- Add building/testing/linting jobs
