@@ -25,4 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('api/', include(router.urls)),
+    path('search/pattern/<str:pattern>/', views.PatternView.as_view()),
 ]
