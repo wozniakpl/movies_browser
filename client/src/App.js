@@ -14,11 +14,21 @@ function makeUrl(path) {
   return getApiHost() + path;
 }
 
+function processRequest(url, callback) {
+  axios
+    .get(url)
+    .then(callback)
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       movies: [],
+      page: 1
     };
   }
 
@@ -50,32 +60,55 @@ class App extends Component {
       });
   };
 
-  onSearchPattern = () => {
-    let txt = document.getElementById("pattern-search").value;
-    let pageNumber = 1
-    axios
-      .get(makeUrl("/api/search/pattern/" + txt + "/" + pageNumber))
-      .then((response) => {
-        this.setState({
-          movies: response.data.Search,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+  makePatternSearchUrl(pageNumber) {
+    let pattern = document.getElementById("pattern-search").value;
+    return makeUrl("/api/search/pattern/" + pattern + "/" + pageNumber)
+  }
+
+  processPatternRequest = (url) => {  
+    processRequest(url, (response) => {
+      this.setState({
+        movies: response.data.Search,
       });
+    })
+    window.scrollTo(0,0); // TODO: rethink that hack
+  }
+
+  onSearchPattern = () => {
+    let pageNumber = 1
+    this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
   };
 
+  onPrevious = () => {
+    if (this.state.page == 1) { return }
+    this.state.page -= 1
+    let pageNumber = this.state.page
+    this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
+  }
+
+  onNext = () => {
+    this.state.page += 1
+    let pageNumber = this.state.page
+    this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
+  }
+
   render() {
+    let buttons = (
+      <div>
+        <input type="button" class="inline" onClick={this.onPrevious} id="slide_start_button" value="Previous" />
+        <input type="button" class="inline" onClick={this.onNext} id="slide_stop_button"  value="Next" />
+      </div>
+    )
+
     let belowSearchBar;
     if (this.state.movies.length > 0) {
       belowSearchBar = (
         <div>
+          {buttons}
           <ul className="list-group list-group-flush border-top-0">
             {this.renderItems()}
           </ul>
-          <div>
-            TODO: pagination
-          </div>
+          {buttons}
         </div>
       );
     } else {
