@@ -20,6 +20,9 @@ from frontend import views
 router = routers.DefaultRouter()
 router.register(r'movies', views.MovieView, 'movie')
 from django.views.generic import TemplateView
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+)
 
 
 urlpatterns = [
@@ -28,4 +31,5 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/search/title/<str:title>/', views.TitlesView.as_view()),
     path('api/search/pattern/<str:pattern>/<int:page>/', views.PatternView.as_view()),
+    path('token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 ]

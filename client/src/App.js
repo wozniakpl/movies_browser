@@ -14,9 +14,18 @@ function makeUrl(path) {
   return getApiHost() + path;
 }
 
-function processRequest(url, callback) {
+function processGetRequest(url, callback) {
   axios
     .get(url)
+    .then(callback)
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function processPostRequest(url, data, callback) {
+  axios
+    .post(url, data)
     .then(callback)
     .catch((error) => {
       console.log(error);
@@ -28,7 +37,8 @@ class App extends Component {
     super(props);
     this.state = {
       movies: [],
-      page: 1
+      page: 1,
+      token: undefined
     };
   }
 
@@ -66,7 +76,7 @@ class App extends Component {
   }
 
   processPatternRequest = (url) => {  
-    processRequest(url, (response) => {
+    processGetRequest(url, (response) => {
       this.setState({
         movies: response.data.Search,
       });
@@ -80,23 +90,72 @@ class App extends Component {
   };
 
   onPrevious = () => {
-    if (this.state.page == 1) { return }
-    this.state.page -= 1
+    if (this.state.page === 1) { return }
+    this.setState({page: this.state.page - 1})
     let pageNumber = this.state.page
     this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
   }
 
   onNext = () => {
-    this.state.page += 1
+    this.setState({page: this.state.page + 1})
     let pageNumber = this.state.page
     this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
   }
 
+  tryToLogIn = () => {
+    console.log("Logging in")
+    let login = document.getElementById("login-field").value;
+    let password = document.getElementById("password-field").value;
+    processPostRequest(makeUrl("/token"), {
+      "username": login,
+      "password": password,
+    }, (response) => {
+      let accessToken = response.data.access
+      console.log("Token", accessToken)
+      this.setState({token: accessToken}) // TODO: refresh token
+    })
+  }
+
+  onLogout = () => {
+    console.log("Logout")
+    this.setState({token: undefined})
+  }
+
   render() {
+    let loginForm = (
+      <div>
+        Login: 
+        <input
+          type="text"
+          id="login-field"
+          placeholder="Login"
+          defaultValue={process.env.NODE_ENV === "production" ? "" : "temp"}
+        ></input>
+        <br />
+        Password: 
+        <input
+          type="password"
+          id="password-field"
+          placeholder="Login"
+          defaultValue={process.env.NODE_ENV === "production" ? "" : "temptemp"}
+        ></input>
+        <br />
+        <button onClick={this.tryToLogIn}>Login</button>
+      </div>
+    )
+    let header;
+    if (this.state.token === undefined) {
+      header = loginForm
+    } else {
+      header = (
+        <button onClick={this.onLogout}>Logout</button>
+      )
+    }
+
     let buttons = (
       <div>
-        <input type="button" class="inline" onClick={this.onPrevious} id="slide_start_button" value="Previous" />
-        <input type="button" class="inline" onClick={this.onNext} id="slide_stop_button"  value="Next" />
+        <input type="button" className="inline" onClick={this.onPrevious} id="slide_start_button" value="Previous" />
+        <input type="button" className="inline" onClick={this.onNext} id="slide_stop_button"  value="Next" />
       </div>
     )
 
@@ -146,6 +205,17 @@ class App extends Component {
       </div>
     );
 
+    let authorizedContent;
+    if (this.state.token !== undefined) {
+      authorizedContent = (
+        <center>
+          {searchBar}
+          <br />
+          {belowSearchBar}
+        </center>
+      );
+    }
+
     return (
       <main className="container">
         <h1 className="text-white text-uppercase text-center my-4">
@@ -154,12 +224,11 @@ class App extends Component {
         <div className="row">
           <div className="col-md-10 col-sm-10 mx-auto p-0">
             <div className="card p-3">
+              <center>
+                {header}
+              </center>
               <div className="mb-4">
-                <center>
-                  {searchBar}
-                  <br />
-                  {belowSearchBar}
-                </center>
+                {authorizedContent}
               </div>
             </div>
           </div>
