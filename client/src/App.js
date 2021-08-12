@@ -88,7 +88,7 @@ class App extends Component {
 
   onSearchPattern = () => {
     let pageNumber = 1
-    this.setState({lastPress: "previous"})
+    this.setState({lastPress: "previous", page: pageNumber})
     this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
   };
 
