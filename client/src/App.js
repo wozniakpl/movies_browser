@@ -227,7 +227,7 @@ class App extends Component {
 
     return (
       <main className="container">
-        <h1 className="text-white text-uppercase text-center my-4">
+        <h1 className="text-black text-uppercase text-center my-4">
           Movies browser
         </h1>
         <div className="row">
