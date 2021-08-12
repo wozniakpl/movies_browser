@@ -1,5 +1,7 @@
 # Movie Database
 
+`With google chrome, it has problems with CORS. Use Firefox instead.`
+
 Will use [omdbapi](http://www.omdbapi.com/) to get movies data. You will need to log in.
 
 ## Development
