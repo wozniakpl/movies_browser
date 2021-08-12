@@ -23,7 +23,20 @@ from django.views.generic import TemplateView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
 )
+from django.conf import settings
 
+def ensure_temporary_user_existence():
+    from django.contrib.auth.models import User
+    if User.objects.filter(username="temp").exists():
+        return
+
+    user = User.objects.create(username="temp")
+    user.set_password("temptemp")
+    user.save()
+
+
+if settings.DEBUG:
+    ensure_temporary_user_existence()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
