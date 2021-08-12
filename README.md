@@ -2,7 +2,7 @@
 
 `With google chrome, it has problems with CORS. Use Firefox instead.`
 
-Will use [omdbapi](http://www.omdbapi.com/) to get movies data. You will need to log in.
+Will use [omdbapi](http://www.omdbapi.com/) to get movies data.
 
 ## Development
 
@@ -64,6 +64,5 @@ You can set env variable REACT_APP_BACKEND_HOST to any host you want, e.g. 172.1
 
 ## TODO
 
-- Browsing/searching
 - Logging in
 - Storing stuff in db
