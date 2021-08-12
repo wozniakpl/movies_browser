@@ -27,5 +27,5 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('api/', include(router.urls)),
     path('api/search/title/<str:title>/', views.TitlesView.as_view()),
-    path('api/search/pattern/<str:title>/', views.PatternView.as_view()),
+    path('api/search/pattern/<str:pattern>/<int:page>/', views.PatternView.as_view()),
 ]

@@ -19,7 +19,7 @@ class TitlesView(APIView):
         return Response(json.loads(data))
 
 class PatternView(APIView):
-    def get(self, request, title, *args, **kwargs):
-        data = OMDBClient.search_pattern(title)
+    def get(self, request, pattern, page, *args, **kwargs):
+        data = OMDBClient.search_pattern(pattern, page)
         # TODO: check, if such request was made and store response
         return Response(json.loads(data))

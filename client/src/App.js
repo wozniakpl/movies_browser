@@ -23,9 +23,8 @@ class App extends Component {
   }
 
   renderItems = () => {
-    const newItems = this.state.movies ? this.state.movies : [];
-
-    return newItems.map((item) => (
+    const items = this.state.movies ? this.state.movies : [];
+    return items.map((item) => (
       <li
         key={item.imdbID}
         className="list-group-item justify-content-between align-items-center"
@@ -51,10 +50,11 @@ class App extends Component {
       });
   };
 
-  onSearchMovie = () => {
+  onSearchPattern = () => {
     let txt = document.getElementById("pattern-search").value;
+    let pageNumber = 1
     axios
-      .get(makeUrl("/api/search/pattern/" + txt))
+      .get(makeUrl("/api/search/pattern/" + txt + "/" + pageNumber))
       .then((response) => {
         this.setState({
           movies: response.data.Search,
@@ -69,9 +69,14 @@ class App extends Component {
     let belowSearchBar;
     if (this.state.movies.length > 0) {
       belowSearchBar = (
-        <ul className="list-group list-group-flush border-top-0">
-          {this.renderItems()}
-        </ul>
+        <div>
+          <ul className="list-group list-group-flush border-top-0">
+            {this.renderItems()}
+          </ul>
+          <div>
+            TODO: pagination
+          </div>
+        </div>
       );
     } else {
       belowSearchBar = <p>nothing to show</p>;
@@ -89,7 +94,7 @@ class App extends Component {
       </div>
     );
 
-    let searchMovies = (
+    let searchPattern = (
       <div>
         <input
           type="text"
@@ -97,14 +102,14 @@ class App extends Component {
           id="pattern-search"
           defaultValue={process.env.NODE_ENV === "production" ? "" : "potter"}
         ></input>
-        <button onClick={this.onSearchMovie}>Pattern search</button>
+        <button onClick={this.onSearchPattern}>Pattern search</button>
       </div>
     );
 
     let searchBar = (
       <div>
         {searchTitle}
-        {searchMovies}
+        {searchPattern}
       </div>
     );
 

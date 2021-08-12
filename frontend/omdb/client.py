@@ -11,6 +11,6 @@ class OMDBClient:
         response = requests.get(make_url() + "t=" + title)
         return response.text
 
-    def search_pattern(pattern):
-        response = requests.get(make_url() + "s=" + pattern)
+    def search_pattern(pattern, page=1):
+        response = requests.get(make_url() + f"s={pattern}&page={page}")
         return response.text
