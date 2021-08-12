@@ -7,6 +7,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .omdb.client import OMDBClient
 import json
+from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
+
 class MovieView(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
     queryset = Movie.objects.all()
