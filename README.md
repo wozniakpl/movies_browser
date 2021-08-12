@@ -48,7 +48,7 @@ Command above will also start the db, so no need to run db explicitly then.
 
 ### Client
 
-Start the client by calling in `client` directory:
+Start the client by calling in `frontend` directory:
 
 ```
 yarn

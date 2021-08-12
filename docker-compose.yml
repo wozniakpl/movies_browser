@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
   frontend:
-    build: client
+    build: frontend
     environment:
       - NODE_ENV="production"
     volumes:
