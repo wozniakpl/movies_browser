@@ -38,7 +38,8 @@ class App extends Component {
     this.state = {
       movies: [],
       page: 1,
-      token: undefined
+      token: undefined,
+      lastPress: undefined
     };
   }
 
@@ -68,6 +69,7 @@ class App extends Component {
       .catch((error) => {
         console.log(error);
       });
+    this.setState({lastPress: "exact"})
   };
 
   makePatternSearchUrl(pageNumber) {
@@ -86,6 +88,7 @@ class App extends Component {
 
   onSearchPattern = () => {
     let pageNumber = 1
+    this.setState({lastPress: "previous"})
     this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
   };
 
@@ -152,12 +155,18 @@ class App extends Component {
       )
     }
 
-    let buttons = (
-      <div>
-        <input type="button" className="inline" onClick={this.onPrevious} id="slide_start_button" value="Previous" />
-        <input type="button" className="inline" onClick={this.onNext} id="slide_stop_button"  value="Next" />
-      </div>
-    )
+    let buttons;
+    if (this.state.lastPress === "exact") { 
+      buttons = <div></div>
+    }
+    else { 
+      buttons = (
+        <div>
+          <input type="button" className="inline" onClick={this.onPrevious} id="slide_start_button" value="Previous" />
+          <input type="button" className="inline" onClick={this.onNext} id="slide_stop_button"  value="Next" />
+        </div>
+      )
+    }
 
     let belowSearchBar;
     if (this.state.movies.length > 0) {
