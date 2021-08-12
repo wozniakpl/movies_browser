@@ -93,15 +93,15 @@ class App extends Component {
   };
 
   onPrevious = () => {
+    let pageNumber = this.state.page - 1
     if (this.state.page === 1) { return }
-    this.setState({page: this.state.page - 1})
-    let pageNumber = this.state.page
+    this.setState({page: pageNumber})
     this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
   }
 
   onNext = () => {
-    this.setState({page: this.state.page + 1})
-    let pageNumber = this.state.page
+    let pageNumber = this.state.page + 1
+    this.setState({page: pageNumber})
     this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
   }
 
