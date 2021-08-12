@@ -35,8 +35,8 @@ def ensure_temporary_user_existence():
     user.save()
 
 
-if settings.DEBUG:
-    ensure_temporary_user_existence()
+# if settings.DEBUG: # TODO
+ensure_temporary_user_existence()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
