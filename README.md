@@ -12,7 +12,7 @@ To run the production version of the app, call:
 docker-compose up
 ```
 
-And visit [http://localhost:3000](http://localhost:3000) in your browser.
+And visit [http://localhost:3000](http://localhost:3000) in your browser. Log in with `temp:temptemp`.
 
 ### Database
 
