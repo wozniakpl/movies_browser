@@ -39,7 +39,7 @@ class App extends Component {
       movies: [],
       page: 1,
       token: undefined,
-      lastPress: undefined
+      lastPress: undefined,
     };
   }
 
@@ -69,65 +69,71 @@ class App extends Component {
       .catch((error) => {
         console.log(error);
       });
-    this.setState({lastPress: "exact"})
+    this.setState({ lastPress: "exact" });
   };
 
   makePatternSearchUrl(pageNumber) {
     let pattern = document.getElementById("pattern-search").value;
-    return makeUrl("/api/search/pattern/" + pattern + "/" + pageNumber)
+    return makeUrl("/api/search/pattern/" + pattern + "/" + pageNumber);
   }
 
-  processPatternRequest = (url) => {  
+  processPatternRequest = (url) => {
     processGetRequest(url, (response) => {
       this.setState({
         movies: response.data.Search,
       });
-    })
-    window.scrollTo(0,0); // TODO: rethink that hack
-  }
+    });
+    window.scrollTo(0, 0); // TODO: rethink that hack
+  };
 
   onSearchPattern = () => {
-    let pageNumber = 1
-    this.setState({lastPress: "previous", page: pageNumber})
-    this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
+    let pageNumber = 1;
+    this.setState({ lastPress: "previous", page: pageNumber });
+    this.processPatternRequest(this.makePatternSearchUrl(pageNumber));
   };
 
   onPrevious = () => {
-    let pageNumber = this.state.page - 1
-    if (this.state.page === 1) { return }
-    this.setState({page: pageNumber})
-    this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
-  }
+    let pageNumber = this.state.page - 1;
+    if (this.state.page === 1) {
+      return;
+    }
+    this.setState({ page: pageNumber });
+    this.processPatternRequest(this.makePatternSearchUrl(pageNumber));
+  };
 
   onNext = () => {
-    let pageNumber = this.state.page + 1
-    this.setState({page: pageNumber})
-    this.processPatternRequest(this.makePatternSearchUrl(pageNumber))
-  }
+    let pageNumber = this.state.page + 1;
+    this.setState({ page: pageNumber });
+    this.processPatternRequest(this.makePatternSearchUrl(pageNumber));
+  };
 
   tryToLogIn = () => {
-    console.log("Logging in")
+    console.log("Logging in");
     let login = document.getElementById("login-field").value;
     let password = document.getElementById("password-field").value;
-    processPostRequest(makeUrl("/token"), {
-      "username": login,
-      "password": password,
-    }, (response) => {
-      let accessToken = response.data.access
-      console.log("Token", accessToken)
-      this.setState({token: accessToken}) // TODO: refresh token
-    })
-  }
+    processPostRequest(
+      makeUrl("/token"),
+      {
+        username: login,
+        password: password,
+      },
+      (response) => {
+        let accessToken = response.data.access;
+        console.log("Token", accessToken);
+        this.setState({ token: accessToken }); // TODO: refresh token
+      }
+    );
+  };
 
   onLogout = () => {
-    console.log("Logout")
-    this.setState({token: undefined})
-  }
+    console.log("Logout");
+    this.setState({ token: undefined });
+  };
 
   render() {
     let loginForm = (
       <div>
-        Login: 
+        Login:
         <input
           type="text"
           id="login-field"
@@ -135,7 +141,7 @@ class App extends Component {
           defaultValue={process.env.NODE_ENV === "production" ? "" : "temp"}
         ></input>
         <br />
-        Password: 
+        Password:
         <input
           type="password"
           id="password-field"
@@ -145,27 +151,36 @@ class App extends Component {
         <br />
         <button onClick={this.tryToLogIn}>Login</button>
       </div>
-    )
+    );
     let header;
     if (this.state.token === undefined) {
-      header = loginForm
+      header = loginForm;
     } else {
-      header = (
-        <button onClick={this.onLogout}>Logout</button>
-      )
+      header = <button onClick={this.onLogout}>Logout</button>;
     }
 
     let buttons;
-    if (this.state.lastPress === "exact") { 
-      buttons = <div></div>
-    }
-    else { 
+    if (this.state.lastPress === "exact") {
+      buttons = <div></div>;
+    } else {
       buttons = (
         <div>
-          <input type="button" className="inline" onClick={this.onPrevious} id="slide_start_button" value="Previous" />
-          <input type="button" className="inline" onClick={this.onNext} id="slide_stop_button"  value="Next" />
+          <input
+            type="button"
+            className="inline"
+            onClick={this.onPrevious}
+            id="slide_start_button"
+            value="Previous"
+          />
+          <input
+            type="button"
+            className="inline"
+            onClick={this.onNext}
+            id="slide_stop_button"
+            value="Next"
+          />
         </div>
-      )
+      );
     }
 
     let belowSearchBar;
@@ -233,12 +248,8 @@ class App extends Component {
         <div className="row">
           <div className="col-md-10 col-sm-10 mx-auto p-0">
             <div className="card p-3">
-              <center>
-                {header}
-              </center>
-              <div className="mb-4">
-                {authorizedContent}
-              </div>
+              <center>{header}</center>
+              <div className="mb-4">{authorizedContent}</div>
             </div>
           </div>
         </div>
